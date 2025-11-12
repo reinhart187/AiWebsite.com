@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI in Healthcare - Solving Health Problems</title>
+     <link rel="icon" type="image/jpeg" class="favicon-bulat" href="assets/logo.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+            --blue: #3b82f6;
+            --green: #10b981;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: var(--dark);
+            color: var(--light);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(241, 99, 99, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-button {
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(241, 99, 99, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 5% 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(241, 99, 99, 0.3), transparent);
+            border-radius: 50%;
+            top: -250px;
+            right: -200px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.2), transparent);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -150px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #fca5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 5%;
+            position: relative;
+        }
+
+        .section-intro {
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            text-align: center;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .section-intro h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-intro p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Problem Cards */
+        .problem-container {
+            max-width: 1200px;
+            margin: 0 auto 6rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .problem-container:nth-child(2) { animation-delay: 0.2s; }
+        .problem-container:nth-child(3) { animation-delay: 0.4s; }
+        .problem-container:nth-child(4) { animation-delay: 0.6s; }
+
+        .problem-header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .problem-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .problem-title {
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .problem-description {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Problem Detail Card */
+        .problem-detail {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 3rem;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .problem-detail:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+        }
+
+        .challenge-section {
+            margin-bottom: 3rem;
+        }
+
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .challenge-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .challenge-header h3 {
+            font-size: 1.5rem;
+            color: #ef4444;
+        }
+
+        .challenge-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .challenge-list li {
+            padding: 1rem;
+            background: rgba(42, 15, 15, 0.5);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #ef4444;
+            color: #cbd5e1;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-list li:hover {
+            transform: translateX(10px);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .challenge-list li::before {
+            content: '⚠️';
+            margin-right: 0.5rem;
+        }
+
+        /* Solutions Section */
+        .solutions-section {
+            margin-top: 3rem;
+        }
+
+        .solutions-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .solutions-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .solutions-header h3 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .solution-card {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .solution-card:hover::before {
+            left: 100%;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.4);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .solution-card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover .solution-card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .solution-card h4 {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .solution-card p {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .solution-features li {
+            padding: 0.5rem 0;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .solution-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Impact Statistics */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(99, 102, 241, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(241, 99, 99, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(241, 99, 99, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 25px;
+            margin: 5rem auto;
+            max-width: 900px;
+            border: 1px solid rgba(241, 99, 99, 0.3);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .cta-section p {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(241, 99, 99, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(241, 99, 99, 0.2);
+        }
+
+        footer p {
+            color: #94a3b8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .problem-title {
+                font-size: 1.5rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-detail {
+                padding: 2rem 1.5rem;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🏥 AI Healthcare</div>
+            <a href="index2.html" class="back-button" onclick="window.history.back()">
+                ← Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-icon">🏥</div>
+            <h1>AI-Powered Healthcare Revolution</h1>
+            <p>Discover how artificial intelligence is transforming healthcare, saving lives through early disease detection, making medical expertise accessible to everyone, and revolutionizing mental health support worldwide.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-intro">
+            <h2>Three Critical Health Challenges Humanity Faces</h2>
+            <p>From delayed disease diagnoses to limited access to mental health care, millions suffer unnecessarily. AI offers breakthrough solutions to detect diseases earlier, provide 24/7 medical guidance, and support mental wellbeing at scale.</p>
+        </div>
+
+        <!-- Problem 1: Disease Diagnosis Delays -->
+        <div class="problem-container">
+            <div class="problem-header-section">
+                <div class="problem-number" style="margin: 0 auto;">01</div>
+                <h2 class="problem-title">Late Disease Detection & Misdiagnosis</h2>
+                <p class="problem-description">Every year, millions of people die from diseases that could have been treated if detected earlier. Medical errors and delayed diagnoses cost countless lives and billions in healthcare expenses.</p>
+            </div>
+
+            <div class="problem-detail">
+                <div class="challenge-section">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">⚠️</div>
+                        <h3>The Challenges</h3>
+                    </div>
+                    <ul class="challenge-list">
+                        <li><strong>Limited Access to Specialists:</strong> Rural areas and developing countries lack radiologists, pathologists, and diagnostic experts</li>
+                        <li><strong>Human Error in Diagnosis:</strong> Doctors can miss subtle signs of disease in X-rays, CT scans, and medical images</li>
+                        <li><strong>Delayed Cancer Detection:</strong> Many cancers are discovered at late stages when treatment is less effective and more expensive</li>
+                        <li><strong>Overwhelming Case Loads:</strong> Medical professionals are overworked, leading to rushed diagnoses and overlooked symptoms</li>
+                        <li><strong>High Cost of Screening:</strong> Regular health screenings are expensive, preventing early detection for many people</li>
+                    </ul>
+                </div>
+
+                <div class="solutions-section">
+                    <div class="solutions-header">
+                        <div class="solutions-icon">✨</div>
+                        <h3>AI-Powered Solutions</h3>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🔬</div>
+                            <h4>AI Medical Imaging Analysis</h4>
+                            <p>Advanced algorithms detect diseases from X-rays, MRIs, and CT scans with superhuman accuracy</p>
+                            <ul class="solution-features">
+                                <li>Detects cancer earlier than human experts</li>
+                                <li>Analyzes thousands of images in seconds</li>
+                                <li>Identifies subtle patterns invisible to naked eye</li>
+                                <li>Google's AI, PathAI, Zebra Medical examples</li>
+                                <li>95%+ accuracy in lung cancer detection</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🧬</div>
+                            <h4>Predictive Disease Analytics</h4>
+                            <p>AI predicts disease risk years before symptoms appear using genetic and lifestyle data</p>
+                            <ul class="solution-features">
+                                <li>Analyzes DNA for hereditary disease risk</li>
+                                <li>Monitors vital signs for early warnings</li>
+                                <li>Predicts heart attacks and strokes</li>
+                                <li>Recommends personalized prevention plans</li>
+                                <li>IBM Watson Health, Tempus platforms</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">👨‍⚕️</div>
+                            <h4>AI Diagnostic Assistants</h4>
+                            <p>Intelligent systems help doctors make faster, more accurate diagnoses</p>
+                            <ul class="solution-features">
+                                <li>Suggests possible diagnoses based on symptoms</li>
+                                <li>Cross-references millions of medical cases</li>
+                                <li>Flags drug interactions and allergies</li>
+                                <li>Reduces diagnostic errors by 40%</li>
+                                <li>Available in remote and underserved areas</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="impact-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">94%</div>
+                            <div class="stat-label">Accuracy in cancer detection</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">50%</div>
+                            <div class="stat-label">Reduction in diagnostic time</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1M+</div>
+                            <div class="stat-label">Lives saved through early detection</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 2: Limited Healthcare Access -->
+        <div class="problem-container">
+            <div class="problem-header-section">
+                <div class="problem-number" style="margin: 0 auto;">02</div>
+                <h2 class="problem-title">Limited Access to Medical Expertise</h2>
+                <p class="problem-description">Billions of people lack access to basic healthcare. Long wait times, expensive consultations, and geographic barriers prevent people from getting the medical help they need.</p>
+            </div>
+
+            <div class="problem-detail">
+                <div class="challenge-section">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">⚠️</div>
+                        <h3>The Challenges</h3>
+                    </div>
+                    <ul class="challenge-list">
+                        <li><strong>Doctor Shortages:</strong> Rural areas have too few medical professionals to serve entire communities</li>
+                        <li><strong>Long Wait Times:</strong> Patients wait weeks or months for specialist appointments, even for urgent conditions</li>
+                        <li><strong>High Medical Costs:</strong> Consultations, treatments, and medications are unaffordable for many families</li>
+                        <li><strong>Language Barriers:</strong> Patients and doctors often can't communicate effectively in multilingual regions</li>
+                        <li><strong>After-Hours Emergencies:</strong> Medical questions arise at night when clinics are closed and people delay seeking help</li>
+                    </ul>
+                </div>
+
+                <div class="solutions-section">
+                    <div class="solutions-header">
+                        <div class="solutions-icon">✨</div>
+                        <h3>AI-Powered Solutions</h3>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <div class="solution-card">
+                            <div class="solution-card-icon">💬</div>
+                            <h4>AI Medical Chatbots</h4>
+                            <p>24/7 virtual health assistants provide instant medical guidance and symptom checking</p>
+                            <ul class="solution-features">
+                                <li>Available anytime, anywhere via smartphone</li>
+                                <li>Answers health questions in real-time</li>
+                                <li>Assesses symptoms and urgency levels</li>
+                                <li>Babylon Health, Ada, Buoy Health examples</li>
+                                <li>Supports 100+ languages</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">📱</div>
+                            <h4>Telemedicine Platforms</h4>
+                            <p>AI-enhanced video consultations connect patients with doctors remotely</p>
+                            <ul class="solution-features">
+                                <li>Virtual doctor visits from home</li>
+                                <li>AI pre-screens patients for efficiency</li>
+                                <li>Records and analyzes vital signs remotely</li>
+                                <li>E-prescriptions sent directly to pharmacy</li>
+                                <li>70% lower cost than in-person visits</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">⌚</div>
+                            <h4>Health Monitoring Wearables</h4>
+                            <p>Smart devices continuously track health metrics and alert users to potential issues</p>
+                            <ul class="solution-features">
+                                <li>Monitors heart rate, sleep, activity</li>
+                                <li>Detects irregular heart rhythms (AFib)</li>
+                                <li>Alerts emergency contacts if falls detected</li>
+                                <li>Tracks medication adherence</li>
+                                <li>Apple Watch, Fitbit, Oura Ring</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="impact-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">2B+</div>
+                            <div class="stat-label">People reached through AI health apps</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">60%</div>
+                            <div class="stat-label">Reduction in unnecessary ER visits</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Medical guidance availability</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 3: Mental Health Crisis -->
+        <div class="problem-container">
+            <div class="problem-header-section">
+                <div class="problem-number" style="margin: 0 auto;">03</div>
+                <h2 class="problem-title">Mental Health Crisis & Therapy Shortage</h2>
+                <p class="problem-description">Nearly 1 billion people worldwide suffer from mental health disorders. Yet therapists are scarce, expensive, and many people feel too ashamed to seek help, leading to a global mental health emergency.</p>
+            </div>
+
+            <div class="problem-detail">
+                <div class="challenge-section">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">⚠️</div>
+                        <h3>The Challenges</h3>
+                    </div>
+                    <ul class="challenge-list">
+                        <li><strong>Therapist Shortage:</strong> Millions need mental health support but can't find or afford therapists</li>
+                        <li><strong>Social Stigma:</strong> People fear judgment and avoid seeking help for depression, anxiety, and trauma</li>
+                        <li><strong>High Treatment Costs:</strong> Therapy sessions cost $100-300 per hour, making regular care unaffordable</li>
+                        <li><strong>Long Waiting Lists:</strong> Patients wait months for their first therapy appointment during crisis periods</li>
+                        <li><strong>Lack of Continuous Support:</strong> Weekly therapy sessions leave patients without support during difficult moments</li>
+                    </ul>
+                </div>
+
+                <div class="solutions-section">
+                    <div class="solutions-header">
+                        <div class="solutions-icon">✨</div>
+                        <h3>AI-Powered Solutions</h3>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🧠</div>
+                            <h4>AI Therapy Chatbots</h4>
+                            <p>Compassionate AI companions provide 24/7 emotional support and evidence-based therapy</p>
+                            <ul class="solution-features">
+                                <li>Available anytime for emotional support</li>
+                                <li>Uses CBT and DBT therapy techniques</li>
+                                <li>Completely private and judgment-free</li>
+                                <li>Woebot, Wysa, Replika examples</li>
+                                <li>90% user satisfaction rate</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">😌</div>
+                            <h4>Mental Health Monitoring</h4>
+                            <p>AI detects early signs of depression, anxiety, and stress through behavior analysis</p>
+                            <ul class="solution-features">
+                                <li>Analyzes speech patterns and mood changes</li>
+                                <li>Tracks sleep, activity, social interactions</li>
+                                <li>Alerts users to concerning patterns</li>
+                                <li>Suggests coping strategies and resources</li>
+                                <li>Connects to crisis hotlines when needed</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🎧</div>
+                            <h4>Mindfulness & Stress Relief</h4>
+                            <p>AI-powered meditation and relaxation tools personalized to your mental state</p>
+                            <ul class="solution-features">
+                                <li>Guided meditation customized to mood</li>
+                                <li>Breathing exercises for anxiety relief</li>
+                                <li>AI-generated calming music and sounds</li>
+                                <li>Progress tracking and streak rewards</li>
+                                <li>Headspace, Calm, Endel examples</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="impact-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">70%</div>
+                            <div class="stat-label">Reduction in anxiety symptoms</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10M+</div>
+                            <div class="stat-label">People using AI mental health tools</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Emotional support availability</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="cta-section">
+            <h2>Ready to Transform Your Health Journey?</h2>
+            <p>Join millions worldwide who are using AI to detect diseases earlier, access better healthcare, and improve their mental wellbeing.</p>
+            <a href="#" class="cta-button" onclick="window.history.back()">Explore More AI Solutions</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: left; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="color: var(--light); margin-bottom: 1rem; font-size: 1.2rem;">
+                        <span style="background: linear-gradient(135deg, var(--primary), var(--accent)); background-clip: text; -webkit-text-fill-color: transparent;">AI Solutions</span>
+                    </h3>
+                    <p style="color: #94a3b8; line-height: 1.6; font-size: 0.95rem;">
+                        Empowering humanity through innovative AI-powered healthcare solutions. Making quality healthcare accessible to everyone.
+                    </p>
+                    <div style="display: flex; gap: 1rem; font-size: 1.5rem; margin-top: 1rem;">
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">📧</a>
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">💬</a>
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">🌐</a>
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">💻</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="color: var(--light); margin-bottom: 1rem;">Quick Links</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="window.history.back()" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Home</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Education & Learning</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Health & Wellbeing</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Environment</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Future & Innovation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(99, 102, 241, 0.2); padding-top: 2rem; text-align: center;">
+                <p style="color: #94a3b8; margin-bottom: 0.5rem;">&copy; 2024 AI Solutions for Humanity | High School Competition Project</p>
+                <p style="color: #64748b; font-size: 0.9rem;">Creating a better future through artificial intelligence and healthcare</p>
+                <p style="color: #475569; font-size: 0.85rem; margin-top: 1rem;">
+                    Made with 💜 by Reinhart Yohanes Ern.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+
+        // Smooth scrolling for all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.problem-container').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add hover effect to footer links
+        document.querySelectorAll('footer a').forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.color = 'var(--primary)';
+            });
+            link.addEventListener('mouseleave', function() {
+                this.style.color = '#94a3b8';
+            });
+        });
+
+        // Animate statistics when visible
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        stat.style.animation = 'pulse 0.6s ease';
+                    });
+                    statObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.impact-stats').forEach(el => {
+            statObserver.observe(el);
+        });
+
+        // Add parallax effect to hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const heroBg = document.querySelector('.hero-bg');
+            if (heroBg && scrolled < window.innerHeight) {
+                heroBg.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>

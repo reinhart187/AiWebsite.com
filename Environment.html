@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI for Environment - Solving Climate Problems</title>
+     <link rel="icon" type="image/jpeg" class="favicon-bulat" href="assets/logo.jpg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #10b981;
+            --secondary: #14b8a6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f1f5f9;
+            --green: #22c55e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: var(--dark);
+            color: var(--light);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-button {
+            padding: 0.5rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 5% 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0f172a 0%, #134e4a 50%, #065f46 100%);
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3), transparent);
+            border-radius: 50%;
+            top: -250px;
+            right: -200px;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(20, 184, 166, 0.2), transparent);
+            border-radius: 50%;
+            bottom: -200px;
+            left: -150px;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1000px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff, #a7f3d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 80px 5%;
+            position: relative;
+        }
+
+        .section-intro {
+            max-width: 900px;
+            margin: 0 auto 5rem;
+            text-align: center;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        .section-intro h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-intro p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Problem Cards */
+        .problem-container {
+            max-width: 1200px;
+            margin: 0 auto 6rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .problem-container:nth-child(2) { animation-delay: 0.2s; }
+        .problem-container:nth-child(3) { animation-delay: 0.4s; }
+        .problem-container:nth-child(4) { animation-delay: 0.6s; }
+
+        .problem-header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .problem-number {
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .problem-title {
+            font-size: 2rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .problem-description {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Problem Detail Card */
+        .problem-detail {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 3rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .problem-detail:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(16, 185, 129, 0.3);
+        }
+
+        .challenge-section {
+            margin-bottom: 3rem;
+        }
+
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .challenge-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(239, 68, 68, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .challenge-header h3 {
+            font-size: 1.5rem;
+            color: #ef4444;
+        }
+
+        .challenge-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .challenge-list li {
+            padding: 1rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 3px solid #ef4444;
+            color: #cbd5e1;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .challenge-list li:hover {
+            transform: translateX(10px);
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .challenge-list li::before {
+            content: '⚠️';
+            margin-right: 0.5rem;
+        }
+
+        /* Solutions Section */
+        .solutions-section {
+            margin-top: 3rem;
+        }
+
+        .solutions-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .solutions-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .solutions-header h3 {
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .solution-card {
+            background: rgba(15, 23, 42, 0.7);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .solution-card:hover::before {
+            left: 100%;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(16, 185, 129, 0.4);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .solution-card-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover .solution-card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .solution-card h4 {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+        }
+
+        .solution-card p {
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .solution-features li {
+            padding: 0.5rem 0;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .solution-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Impact Statistics */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(16, 185, 129, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(20, 184, 166, 0.1));
+            border-radius: 25px;
+            margin: 5rem auto;
+            max-width: 900px;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .cta-section p {
+            color: #cbd5e1;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 23, 42, 0.95);
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        footer p {
+            color: #94a3b8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .problem-title {
+                font-size: 1.5rem;
+            }
+
+            .solutions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-detail {
+                padding: 2rem 1.5rem;
+            }
+
+            .impact-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">🌍 AI Environment</div>
+            <a href="index2.html" class="back-button" onclick="history.back()">
+                ← Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-icon">🌱</div>
+            <h1>AI-Powered Environmental Solutions</h1>
+            <p>Discover how artificial intelligence is revolutionizing environmental protection, combating climate change, and creating a sustainable future for our planet and generations to come.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="section-intro">
+            <h2>Three Critical Environmental Challenges</h2>
+            <p>Our planet faces unprecedented environmental crises from climate change to pollution. AI offers powerful tools to monitor, predict, and solve these challenges—creating innovative solutions for a sustainable future.</p>
+        </div>
+
+        <!-- Problem 1: Climate Change -->
+        <div class="problem-container">
+            <div class="problem-header-section">
+                <div class="problem-number" style="margin: 0 auto;">01</div>
+                <h2 class="problem-title">Climate Change & Global Warming</h2>
+                <p class="problem-description">Rising temperatures, extreme weather events, and melting ice caps threaten ecosystems and human civilization. Traditional monitoring methods cannot process the massive amounts of climate data needed for accurate predictions.</p>
+            </div>
+
+            <div class="problem-detail">
+                <div class="challenge-section">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">⚠️</div>
+                        <h3>The Challenges</h3>
+                    </div>
+                    <ul class="challenge-list">
+                        <li><strong>Complex Data Analysis:</strong> Climate involves billions of data points from satellites, sensors, and weather stations that humans cannot process manually</li>
+                        <li><strong>Inaccurate Predictions:</strong> Traditional models struggle to predict extreme weather events, droughts, and floods with precision</li>
+                        <li><strong>Slow Response Time:</strong> By the time humans analyze data and respond, environmental damage has already occurred</li>
+                        <li><strong>CO2 Emission Tracking:</strong> Difficulty monitoring and reducing greenhouse gas emissions from millions of sources worldwide</li>
+                        <li><strong>Energy Inefficiency:</strong> Wasteful energy consumption patterns in cities, buildings, and industries contribute to warming</li>
+                    </ul>
+                </div>
+
+                <div class="solutions-section">
+                    <div class="solutions-header">
+                        <div class="solutions-icon">✨</div>
+                        <h3>AI-Powered Solutions</h3>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🌡️</div>
+                            <h4>Climate Prediction Models</h4>
+                            <p>Advanced AI systems analyze massive climate datasets to forecast weather patterns and environmental changes</p>
+                            <ul class="solution-features">
+                                <li>Predicts extreme weather events with 90% accuracy</li>
+                                <li>Analyzes satellite imagery and sensor data in real-time</li>
+                                <li>Identifies climate trends and tipping points</li>
+                                <li>Google DeepMind, IBM Weather, Climate AI examples</li>
+                                <li>Helps governments prepare disaster response</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">⚡</div>
+                            <h4>Smart Energy Management</h4>
+                            <p>AI optimizes energy consumption in buildings, cities, and industrial facilities to reduce carbon footprint</p>
+                            <ul class="solution-features">
+                                <li>Reduces energy waste by up to 40%</li>
+                                <li>Automatically adjusts heating, cooling, and lighting</li>
+                                <li>Optimizes renewable energy grid distribution</li>
+                                <li>Predicts energy demand patterns</li>
+                                <li>Lowers electricity bills and emissions</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">📊</div>
+                            <h4>Carbon Emission Monitoring</h4>
+                            <p>AI tracks and analyzes greenhouse gas emissions from industries, vehicles, and agriculture globally</p>
+                            <ul class="solution-features">
+                                <li>Monitors emissions from space using satellites</li>
+                                <li>Identifies major pollution sources in real-time</li>
+                                <li>Helps companies track carbon footprint</li>
+                                <li>Suggests emission reduction strategies</li>
+                                <li>Climate TRACE, Carbon Mapper examples</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="impact-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">40%</div>
+                            <div class="stat-label">Energy savings through AI optimization</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">90%</div>
+                            <div class="stat-label">Weather prediction accuracy</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">15%</div>
+                            <div class="stat-label">Global emissions reducible by AI</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 2: Pollution & Waste -->
+        <div class="problem-container">
+            <div class="problem-header-section">
+                <div class="problem-number" style="margin: 0 auto;">02</div>
+                <h2 class="problem-title">Pollution & Waste Management Crisis</h2>
+                <p class="problem-description">8 million tons of plastic enter our oceans annually. Air pollution kills 7 million people yearly. Traditional waste management systems are overwhelmed and inefficient, leading to environmental degradation.</p>
+            </div>
+
+            <div class="problem-detail">
+                <div class="challenge-section">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">⚠️</div>
+                        <h3>The Challenges</h3>
+                    </div>
+                    <ul class="challenge-list">
+                        <li><strong>Plastic Pollution:</strong> Oceans filled with 150 million tons of plastic waste, harming marine life and ecosystems</li>
+                        <li><strong>Inefficient Recycling:</strong> Only 9% of plastic is recycled globally due to contamination and sorting difficulties</li>
+                        <li><strong>Air Quality Monitoring:</strong> Difficulty tracking air pollution levels across cities in real-time to protect public health</li>
+                        <li><strong>Toxic Waste Disposal:</strong> Improper handling of hazardous materials contaminates soil and water sources</li>
+                        <li><strong>Overflowing Landfills:</strong> Waste management systems cannot handle increasing amounts of garbage from growing populations</li>
+                    </ul>
+                </div>
+
+                <div class="solutions-section">
+                    <div class="solutions-header">
+                        <div class="solutions-icon">✨</div>
+                        <h3>AI-Powered Solutions</h3>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <div class="solution-card">
+                            <div class="solution-card-icon">♻️</div>
+                            <h4>Smart Recycling Systems</h4>
+                            <p>AI-powered robots and computer vision sort waste materials with unprecedented speed and accuracy</p>
+                            <ul class="solution-features">
+                                <li>Sorts recyclables 2x faster than humans</li>
+                                <li>Identifies materials by visual recognition</li>
+                                <li>Reduces contamination in recycling streams</li>
+                                <li>AMP Robotics, ZenRobotics examples</li>
+                                <li>Increases recycling rates to 95%</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">💨</div>
+                            <h4>Air Quality Prediction</h4>
+                            <p>AI analyzes pollution data to predict air quality and issue health warnings to vulnerable populations</p>
+                            <ul class="solution-features">
+                                <li>Monitors pollutants like PM2.5, NO2, ozone</li>
+                                <li>Predicts pollution spikes 48 hours ahead</li>
+                                <li>Sends real-time alerts to residents</li>
+                                <li>Identifies pollution sources and patterns</li>
+                                <li>BreezoMeter, IQAir examples</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🌊</div>
+                            <h4>Ocean Cleanup Technology</h4>
+                            <p>AI-guided systems detect and remove plastic pollution from oceans and rivers efficiently</p>
+                            <ul class="solution-features">
+                                <li>Maps plastic concentration using satellites</li>
+                                <li>Guides autonomous cleanup vessels</li>
+                                <li>Predicts ocean current movements</li>
+                                <li>Tracks marine debris in real-time</li>
+                                <li>The Ocean Cleanup AI examples</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="impact-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Recycling accuracy with AI sorting</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">2x</div>
+                            <div class="stat-label">Faster waste processing speed</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">7M</div>
+                            <div class="stat-label">Lives saved by pollution monitoring</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Problem 3: Biodiversity Loss -->
+        <div class="problem-container">
+            <div class="problem-header-section">
+                <div class="problem-number" style="margin: 0 auto;">03</div>
+                <h2 class="problem-title">Deforestation & Biodiversity Loss</h2>
+                <p class="problem-description">We lose 10 million hectares of forest annually—an area the size of Iceland. One million species face extinction. Traditional conservation methods cannot track and protect wildlife across vast territories.</p>
+            </div>
+
+            <div class="problem-detail">
+                <div class="challenge-section">
+                    <div class="challenge-header">
+                        <div class="challenge-icon">⚠️</div>
+                        <h3>The Challenges</h3>
+                    </div>
+                    <ul class="challenge-list">
+                        <li><strong>Illegal Deforestation:</strong> Forests destroyed for agriculture, logging, and development faster than humans can monitor</li>
+                        <li><strong>Wildlife Extinction:</strong> Species disappearing before scientists can study and protect them</li>
+                        <li><strong>Poaching & Trafficking:</strong> Difficult to track and prevent illegal wildlife trade across borders</li>
+                        <li><strong>Habitat Monitoring:</strong> Vast ecosystems are impossible for humans to monitor continuously</li>
+                        <li><strong>Limited Conservation Resources:</strong> Not enough rangers and scientists to protect endangered areas</li>
+                    </ul>
+                </div>
+
+                <div class="solutions-section">
+                    <div class="solutions-header">
+                        <div class="solutions-icon">✨</div>
+                        <h3>AI-Powered Solutions</h3>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🛰️</div>
+                            <h4>Deforestation Detection</h4>
+                            <p>AI analyzes satellite imagery to detect illegal logging and forest fires in real-time</p>
+                            <ul class="solution-features">
+                                <li>Monitors forests 24/7 from space</li>
+                                <li>Detects illegal logging within hours</li>
+                                <li>Alerts authorities for rapid response</li>
+                                <li>Tracks forest regrowth and health</li>
+                                <li>Global Forest Watch, Rainforest Connection</li>
+                            </ul>
+                        </div>
+
+                        <div class="solution-card">
+                            <div class="solution-card-icon">🦁</div>
+                            <h4>Wildlife Conservation AI</h4><p>AI analyzes about Humans but also Ecosystem too</p>
+                            <ul class="solution-features">
+                                <li>Monitoring Ecosystems</li>
+                                <li>Detects illegal logging within hours</li>
+                                <li>Alerts authorities for rapid response</li>
+                                <li>Tracks forest regrowth and health</li>
+                                <li>Global Forest Watch, Rainforest Connection</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <footer>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: left; margin-bottom: 2rem;">
+                <div>
+                    <h3 style="color: var(--light); margin-bottom: 1rem; font-size: 1.2rem;">
+                        <span style="background: linear-gradient(135deg, var(--primary), var(--accent)); background-clip: text; -webkit-text-fill-color: transparent;">AI Solutions</span>
+                    </h3>
+                    <p style="color: #94a3b8; line-height: 1.6; font-size: 0.95rem;">
+                        Empowering students worldwide through innovative AI-powered educational solutions. Making quality education accessible to everyone.
+                    </p>
+                    <div style="display: flex; gap: 1rem; font-size: 1.5rem; margin-top: 1rem;">
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">📧</a>
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">💬</a>
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">🌐</a>
+                        <a href="#" style="color: var(--primary); transition: all 0.3s;">💻</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 style="color: var(--light); margin-bottom: 1rem;">Quick Links</h4>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="history.back()" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Home</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Education & Learning</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Health & Wellbeing</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Environment</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" style="color: #94a3b8; text-decoration: none; transition: color 0.3s;">Future & Innovation</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(99, 102, 241, 0.2); padding-top: 2rem; text-align: center;">
+                <p style="color: #94a3b8; margin-bottom: 0.5rem;">&copy; 2024 AI Solutions for Humanity | High School Competition Project</p>
+                <p style="color: #64748b; font-size: 0.9rem;">Creating a better future through artificial intelligence and education</p>
+                <p style="color: #475569; font-size: 0.85rem; margin-top: 1rem;">
+                    Made with 💜 by Reinhart Yohanes Ern.
+                </p>
+            </div>
+        </div>
+    </footer>
